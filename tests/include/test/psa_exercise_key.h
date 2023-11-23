@@ -134,7 +134,7 @@
  */
 int mbedtls_test_psa_setup_key_derivation_wrap(
     psa_key_derivation_operation_t *operation,
-    mbedtls_svc_key_id_t key,
+    psa_key_id_t key,
     psa_algorithm_t alg,
     const unsigned char *input1, size_t input1_length,
     const unsigned char *input2, size_t input2_length,
@@ -154,7 +154,7 @@ int mbedtls_test_psa_setup_key_derivation_wrap(
  */
 psa_status_t mbedtls_test_psa_raw_key_agreement_with_self(
     psa_algorithm_t alg,
-    mbedtls_svc_key_id_t key);
+    psa_key_id_t key);
 
 /** Perform a key agreement using the given key pair against its public key
  * using psa_key_derivation_raw_key().
@@ -173,7 +173,7 @@ psa_status_t mbedtls_test_psa_raw_key_agreement_with_self(
  */
 psa_status_t mbedtls_test_psa_key_agreement_with_self(
     psa_key_derivation_operation_t *operation,
-    mbedtls_svc_key_id_t key);
+    psa_key_id_t key);
 
 /** Perform sanity checks on the given key representation.
  *
@@ -224,7 +224,7 @@ int mbedtls_test_psa_exported_key_sanity_check(
  * \retval 0 The key failed the smoke tests.
  * \retval 1 The key passed the smoke tests.
  */
-int mbedtls_test_psa_exercise_key(mbedtls_svc_key_id_t key,
+int mbedtls_test_psa_exercise_key(psa_key_id_t key,
                                   psa_key_usage_t usage,
                                   psa_algorithm_t alg);
 

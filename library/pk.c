@@ -154,11 +154,11 @@ int mbedtls_pk_setup(mbedtls_pk_context *ctx, const mbedtls_pk_info_t *info)
  * Initialise a PSA-wrapping context
  */
 int mbedtls_pk_setup_opaque(mbedtls_pk_context *ctx,
-                            const mbedtls_svc_key_id_t key)
+                            const psa_key_id_t key)
 {
     const mbedtls_pk_info_t *info = NULL;
     psa_key_attributes_t attributes = PSA_KEY_ATTRIBUTES_INIT;
-    mbedtls_svc_key_id_t *pk_ctx;
+    psa_key_id_t *pk_ctx;
     psa_key_type_t type;
 
     if (ctx == NULL || ctx->pk_info != NULL) {
@@ -185,7 +185,7 @@ int mbedtls_pk_setup_opaque(mbedtls_pk_context *ctx,
 
     ctx->pk_info = info;
 
-    pk_ctx = (mbedtls_svc_key_id_t *) ctx->pk_ctx;
+    pk_ctx = (psa_key_id_t *) ctx->pk_ctx;
     *pk_ctx = key;
 
     return 0;
@@ -315,7 +315,7 @@ int mbedtls_pk_can_do_ext(const mbedtls_pk_context *ctx, psa_algorithm_t alg,
         return (key_usage & usage) == usage;
     }
 
-    const mbedtls_svc_key_id_t *key = (const mbedtls_svc_key_id_t *) ctx->pk_ctx;
+    const psa_key_id_t *key = (const psa_key_id_t *) ctx->pk_ctx;
     psa_key_attributes_t attributes = PSA_KEY_ATTRIBUTES_INIT;
     psa_algorithm_t key_alg, key_alg2;
     psa_status_t status;
@@ -528,7 +528,7 @@ int mbedtls_pk_verify_ext(mbedtls_pk_type_t type, const void *options,
         psa_status_t destruction_status = PSA_ERROR_DATA_CORRUPT;
 
         psa_algorithm_t psa_md_alg = mbedtls_hash_info_psa_from_md(md_alg);
-        mbedtls_svc_key_id_t key_id = MBEDTLS_SVC_KEY_ID_INIT;
+        psa_key_id_t key_id = MBEDTLS_SVC_KEY_ID_INIT;
         psa_key_attributes_t attributes = PSA_KEY_ATTRIBUTES_INIT;
         psa_algorithm_t psa_sig_alg = PSA_ALG_RSA_PSS_ANY_SALT(psa_md_alg);
         p = buf + sizeof(buf);
@@ -701,7 +701,7 @@ int mbedtls_pk_sign_ext(mbedtls_pk_type_t pk_type,
     }
 
     if (mbedtls_pk_get_type(ctx) == MBEDTLS_PK_OPAQUE) {
-        const mbedtls_svc_key_id_t *key = (const mbedtls_svc_key_id_t *) ctx->pk_ctx;
+        const psa_key_id_t *key = (const psa_key_id_t *) ctx->pk_ctx;
         psa_status_t status;
 
         status = psa_sign_hash(*key, PSA_ALG_RSA_PSS(psa_md_alg),
@@ -857,7 +857,7 @@ mbedtls_pk_type_t mbedtls_pk_get_type(const mbedtls_pk_context *ctx)
  * Currently only works for EC & RSA private keys.
  */
 int mbedtls_pk_wrap_as_opaque(mbedtls_pk_context *pk,
-                              mbedtls_svc_key_id_t *key,
+                              psa_key_id_t *key,
                               psa_algorithm_t alg,
                               psa_key_usage_t usage,
                               psa_algorithm_t alg2)

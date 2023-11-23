@@ -302,7 +302,7 @@ void mbedtls_ct_memcpy_offset(unsigned char *dest,
  *         The hardware accelerator failed.
  */
 #if defined(MBEDTLS_USE_PSA_CRYPTO)
-int mbedtls_ct_hmac(mbedtls_svc_key_id_t key,
+int mbedtls_ct_hmac(psa_key_id_t key,
                     psa_algorithm_t alg,
                     const unsigned char *add_data,
                     size_t add_data_len,

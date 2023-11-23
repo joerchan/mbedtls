@@ -362,7 +362,7 @@ exit:
     size_t use_len, out_len;
     unsigned char *out_p = output;
     unsigned char counter[4];
-    mbedtls_svc_key_id_t psa_hmac_key = MBEDTLS_SVC_KEY_ID_INIT;
+    psa_key_id_t psa_hmac_key = MBEDTLS_SVC_KEY_ID_INIT;
     psa_key_attributes_t attributes = PSA_KEY_ATTRIBUTES_INIT;
     const psa_algorithm_t alg = PSA_ALG_HMAC(mbedtls_hash_info_psa_from_md(md_alg));
     const size_t out_size = PSA_MAC_LENGTH(PSA_KEY_TYPE_HMAC, 0, alg);

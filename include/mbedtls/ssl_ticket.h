@@ -65,7 +65,7 @@ typedef struct mbedtls_ssl_ticket_key {
 #if !defined(MBEDTLS_USE_PSA_CRYPTO)
     mbedtls_cipher_context_t MBEDTLS_PRIVATE(ctx);   /*!< context for auth enc/decryption    */
 #else
-    mbedtls_svc_key_id_t MBEDTLS_PRIVATE(key);       /*!< key used for auth enc/decryption   */
+    psa_key_id_t MBEDTLS_PRIVATE(key);       /*!< key used for auth enc/decryption   */
     psa_algorithm_t MBEDTLS_PRIVATE(alg);            /*!< algorithm of auth enc/decryption   */
     psa_key_type_t MBEDTLS_PRIVATE(key_type);        /*!< key type                           */
     size_t MBEDTLS_PRIVATE(key_bits);                /*!< key length in bits                 */

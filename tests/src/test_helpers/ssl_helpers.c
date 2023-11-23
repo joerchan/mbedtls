@@ -595,7 +595,7 @@ void mbedtls_endpoint_certificate_free(mbedtls_test_ssl_endpoint *ep)
         if (cert->pkey != NULL) {
 #if defined(MBEDTLS_USE_PSA_CRYPTO)
             if (mbedtls_pk_get_type(cert->pkey) == MBEDTLS_PK_OPAQUE) {
-                mbedtls_svc_key_id_t *key_slot = cert->pkey->pk_ctx;
+                psa_key_id_t *key_slot = cert->pkey->pk_ctx;
                 psa_destroy_key(*key_slot);
             }
 #endif
@@ -615,7 +615,7 @@ int mbedtls_test_ssl_endpoint_certificate_init(mbedtls_test_ssl_endpoint *ep,
     int ret = -1;
     mbedtls_test_ssl_endpoint_certificate *cert = NULL;
 #if defined(MBEDTLS_USE_PSA_CRYPTO)
-    mbedtls_svc_key_id_t key_slot = MBEDTLS_SVC_KEY_ID_INIT;
+    psa_key_id_t key_slot = MBEDTLS_SVC_KEY_ID_INIT;
 #endif
 
     if (ep == NULL) {

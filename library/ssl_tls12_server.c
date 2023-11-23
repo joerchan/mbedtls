@@ -2584,7 +2584,7 @@ static int ssl_get_ecdh_params_from_cert(mbedtls_ssl_context *ssl)
             }
 
             ssl->handshake->ecdh_psa_privkey =
-                *((mbedtls_svc_key_id_t *) pk->pk_ctx);
+                *((psa_key_id_t *) pk->pk_ctx);
 
             /* Key should not be destroyed in the TLS library */
             ssl->handshake->ecdh_psa_privkey_is_external = 1;

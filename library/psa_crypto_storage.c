@@ -49,7 +49,7 @@
  * other than storing a key. Currently, the only such file is the random seed
  * file whose name is PSA_CRYPTO_ITS_RANDOM_SEED_UID and whose value is
  * 0xFFFFFF52. */
-static psa_storage_uid_t psa_its_identifier_of_slot(mbedtls_svc_key_id_t key)
+static psa_storage_uid_t psa_its_identifier_of_slot(psa_key_id_t key)
 {
 #if defined(MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER)
     /* Encode the owner in the upper 32 bits. This means that if
@@ -86,7 +86,7 @@ static psa_storage_uid_t psa_its_identifier_of_slot(mbedtls_svc_key_id_t key)
  * \retval #PSA_ERROR_DOES_NOT_EXIST \emptydescription
  */
 static psa_status_t psa_crypto_storage_load(
-    const mbedtls_svc_key_id_t key, uint8_t *data, size_t data_size)
+    const psa_key_id_t key, uint8_t *data, size_t data_size)
 {
     psa_status_t status;
     psa_storage_uid_t data_identifier = psa_its_identifier_of_slot(key);
@@ -106,7 +106,7 @@ static psa_status_t psa_crypto_storage_load(
     return status;
 }
 
-int psa_is_key_present_in_storage(const mbedtls_svc_key_id_t key)
+int psa_is_key_present_in_storage(const psa_key_id_t key)
 {
     psa_status_t ret;
     psa_storage_uid_t data_identifier = psa_its_identifier_of_slot(key);
@@ -137,7 +137,7 @@ int psa_is_key_present_in_storage(const mbedtls_svc_key_id_t key)
  * \retval #PSA_ERROR_STORAGE_FAILURE \emptydescription
  * \retval #PSA_ERROR_DATA_INVALID \emptydescription
  */
-static psa_status_t psa_crypto_storage_store(const mbedtls_svc_key_id_t key,
+static psa_status_t psa_crypto_storage_store(const psa_key_id_t key,
                                              const uint8_t *data,
                                              size_t data_length)
 {
@@ -175,7 +175,7 @@ exit:
     return status;
 }
 
-psa_status_t psa_destroy_persistent_key(const mbedtls_svc_key_id_t key)
+psa_status_t psa_destroy_persistent_key(const psa_key_id_t key)
 {
     psa_status_t ret;
     psa_storage_uid_t data_identifier = psa_its_identifier_of_slot(key);
@@ -211,7 +211,7 @@ psa_status_t psa_destroy_persistent_key(const mbedtls_svc_key_id_t key)
  * \retval #PSA_ERROR_DATA_CORRUPT \emptydescription
  */
 static psa_status_t psa_crypto_storage_get_data_length(
-    const mbedtls_svc_key_id_t key,
+    const psa_key_id_t key,
     size_t *data_length)
 {
     psa_status_t status;
@@ -375,7 +375,7 @@ psa_status_t psa_load_persistent_key(psa_core_key_attributes_t *attr,
     psa_status_t status = PSA_SUCCESS;
     uint8_t *loaded_data;
     size_t storage_data_length = 0;
-    mbedtls_svc_key_id_t key = attr->id;
+    psa_key_id_t key = attr->id;
 
     status = psa_crypto_storage_get_data_length(key, &storage_data_length);
     if (status != PSA_SUCCESS) {

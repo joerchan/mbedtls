@@ -45,7 +45,7 @@ typedef struct {
 
 static psa_global_data_t global_data;
 
-int psa_is_valid_key_id(mbedtls_svc_key_id_t key, int vendor_ok)
+int psa_is_valid_key_id(psa_key_id_t key, int vendor_ok)
 {
     psa_key_id_t key_id = MBEDTLS_SVC_KEY_ID_GET_KEY_ID(key);
 
@@ -95,7 +95,7 @@ int psa_is_valid_key_id(mbedtls_svc_key_id_t key, int vendor_ok)
  *         There is no key with key identifier \p key in the key slots.
  */
 static psa_status_t psa_get_and_lock_key_slot_in_memory(
-    mbedtls_svc_key_id_t key, psa_key_slot_t **p_slot)
+    psa_key_id_t key, psa_key_slot_t **p_slot)
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_id_t key_id = MBEDTLS_SVC_KEY_ID_GET_KEY_ID(key);
@@ -338,7 +338,7 @@ exit:
 }
 #endif /* MBEDTLS_PSA_CRYPTO_BUILTIN_KEYS */
 
-psa_status_t psa_get_and_lock_key_slot(mbedtls_svc_key_id_t key,
+psa_status_t psa_get_and_lock_key_slot(psa_key_id_t key,
                                        psa_key_slot_t **p_slot)
 {
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
@@ -471,7 +471,7 @@ psa_status_t psa_validate_key_persistence(psa_key_lifetime_t lifetime)
     }
 }
 
-psa_status_t psa_open_key(mbedtls_svc_key_id_t key, psa_key_handle_t *handle)
+psa_status_t psa_open_key(psa_key_id_t key, psa_key_handle_t *handle)
 {
 #if defined(MBEDTLS_PSA_CRYPTO_STORAGE_C) || \
     defined(MBEDTLS_PSA_CRYPTO_BUILTIN_KEYS)
@@ -523,7 +523,7 @@ psa_status_t psa_close_key(psa_key_handle_t handle)
     }
 }
 
-psa_status_t psa_purge_key(mbedtls_svc_key_id_t key)
+psa_status_t psa_purge_key(psa_key_id_t key)
 {
     psa_status_t status;
     psa_key_slot_t *slot;

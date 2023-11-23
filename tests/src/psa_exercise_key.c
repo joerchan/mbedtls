@@ -40,12 +40,12 @@ static int lifetime_is_dynamic_secure_element(psa_key_lifetime_t lifetime)
 }
 #endif
 
-static int check_key_attributes_sanity(mbedtls_svc_key_id_t key)
+static int check_key_attributes_sanity(psa_key_id_t key)
 {
     int ok = 0;
     psa_key_attributes_t attributes = PSA_KEY_ATTRIBUTES_INIT;
     psa_key_lifetime_t lifetime;
-    mbedtls_svc_key_id_t id;
+    psa_key_id_t id;
     psa_key_type_t type;
     size_t bits;
 
@@ -110,7 +110,7 @@ exit:
     return ok;
 }
 
-static int exercise_mac_key(mbedtls_svc_key_id_t key,
+static int exercise_mac_key(psa_key_id_t key,
                             psa_key_usage_t usage,
                             psa_algorithm_t alg)
 {
@@ -152,7 +152,7 @@ exit:
     return 0;
 }
 
-static int exercise_cipher_key(mbedtls_svc_key_id_t key,
+static int exercise_cipher_key(psa_key_id_t key,
                                psa_key_usage_t usage,
                                psa_algorithm_t alg)
 {
@@ -227,7 +227,7 @@ exit:
     return 0;
 }
 
-static int exercise_aead_key(mbedtls_svc_key_id_t key,
+static int exercise_aead_key(psa_key_id_t key,
                              psa_key_usage_t usage,
                              psa_algorithm_t alg)
 {
@@ -291,7 +291,7 @@ static int can_sign_or_verify_message(psa_key_usage_t usage,
                     PSA_KEY_USAGE_VERIFY_MESSAGE);
 }
 
-static int exercise_signature_key(mbedtls_svc_key_id_t key,
+static int exercise_signature_key(psa_key_id_t key,
                                   psa_key_usage_t usage,
                                   psa_algorithm_t alg)
 {
@@ -369,7 +369,7 @@ exit:
     return 0;
 }
 
-static int exercise_asymmetric_encryption_key(mbedtls_svc_key_id_t key,
+static int exercise_asymmetric_encryption_key(psa_key_id_t key,
                                               psa_key_usage_t usage,
                                               psa_algorithm_t alg)
 {
@@ -407,7 +407,7 @@ exit:
 
 int mbedtls_test_psa_setup_key_derivation_wrap(
     psa_key_derivation_operation_t *operation,
-    mbedtls_svc_key_id_t key,
+    psa_key_id_t key,
     psa_algorithm_t alg,
     const unsigned char *input1, size_t input1_length,
     const unsigned char *input2, size_t input2_length,
@@ -451,7 +451,7 @@ exit:
 }
 
 
-static int exercise_key_derivation_key(mbedtls_svc_key_id_t key,
+static int exercise_key_derivation_key(psa_key_id_t key,
                                        psa_key_usage_t usage,
                                        psa_algorithm_t alg)
 {
@@ -487,7 +487,7 @@ exit:
  * private key against its own public key. */
 psa_status_t mbedtls_test_psa_key_agreement_with_self(
     psa_key_derivation_operation_t *operation,
-    mbedtls_svc_key_id_t key)
+    psa_key_id_t key)
 {
     psa_key_type_t private_key_type;
     psa_key_type_t public_key_type;
@@ -527,7 +527,7 @@ exit:
  * private key against its own public key. */
 psa_status_t mbedtls_test_psa_raw_key_agreement_with_self(
     psa_algorithm_t alg,
-    mbedtls_svc_key_id_t key)
+    psa_key_id_t key)
 {
     psa_key_type_t private_key_type;
     psa_key_type_t public_key_type;
@@ -574,7 +574,7 @@ exit:
     return status;
 }
 
-static int exercise_raw_key_agreement_key(mbedtls_svc_key_id_t key,
+static int exercise_raw_key_agreement_key(psa_key_id_t key,
                                           psa_key_usage_t usage,
                                           psa_algorithm_t alg)
 {
@@ -591,7 +591,7 @@ exit:
     return ok;
 }
 
-static int exercise_key_agreement_key(mbedtls_svc_key_id_t key,
+static int exercise_key_agreement_key(psa_key_id_t key,
                                       psa_key_usage_t usage,
                                       psa_algorithm_t alg)
 {
@@ -823,7 +823,7 @@ exit:
     return 0;
 }
 
-static int exercise_export_key(mbedtls_svc_key_id_t key,
+static int exercise_export_key(psa_key_id_t key,
                                psa_key_usage_t usage)
 {
     psa_key_attributes_t attributes = PSA_KEY_ATTRIBUTES_INIT;
@@ -866,7 +866,7 @@ exit:
     return ok;
 }
 
-static int exercise_export_public_key(mbedtls_svc_key_id_t key)
+static int exercise_export_public_key(psa_key_id_t key)
 {
     psa_key_attributes_t attributes = PSA_KEY_ATTRIBUTES_INIT;
     psa_key_type_t public_type;
@@ -913,7 +913,7 @@ exit:
     return ok;
 }
 
-int mbedtls_test_psa_exercise_key(mbedtls_svc_key_id_t key,
+int mbedtls_test_psa_exercise_key(psa_key_id_t key,
                                   psa_key_usage_t usage,
                                   psa_algorithm_t alg)
 {

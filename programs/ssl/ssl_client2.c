@@ -773,7 +773,7 @@ int main(int argc, char *argv[])
 
 #if defined(MBEDTLS_USE_PSA_CRYPTO)
 #if defined(MBEDTLS_SSL_HANDSHAKE_WITH_PSK_ENABLED)
-    mbedtls_svc_key_id_t slot = MBEDTLS_SVC_KEY_ID_INIT;
+    psa_key_id_t slot = MBEDTLS_SVC_KEY_ID_INIT;
     psa_algorithm_t alg = 0;
     psa_key_attributes_t key_attributes;
 #endif
@@ -798,7 +798,7 @@ int main(int argc, char *argv[])
     mbedtls_pk_context pkey;
     mbedtls_x509_crt_profile crt_profile_for_test = mbedtls_x509_crt_profile_default;
 #if defined(MBEDTLS_USE_PSA_CRYPTO)
-    mbedtls_svc_key_id_t key_slot = MBEDTLS_SVC_KEY_ID_INIT; /* invalid key slot */
+    psa_key_id_t key_slot = MBEDTLS_SVC_KEY_ID_INIT; /* invalid key slot */
 #endif
 #endif  /* MBEDTLS_SSL_HANDSHAKE_WITH_CERT_ENABLED */
     char *p, *q;
@@ -826,7 +826,7 @@ int main(int argc, char *argv[])
 #endif /* MBEDTLS_SSL_DTLS_SRTP */
 #if defined(MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED) && \
     defined(MBEDTLS_USE_PSA_CRYPTO)
-    mbedtls_svc_key_id_t ecjpake_pw_slot = MBEDTLS_SVC_KEY_ID_INIT; /* ecjpake password key slot */
+    psa_key_id_t ecjpake_pw_slot = MBEDTLS_SVC_KEY_ID_INIT; /* ecjpake password key slot */
 #endif /* MBEDTLS_USE_PSA_CRYPTO && MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED */
 
 #if defined(MBEDTLS_MEMORY_BUFFER_ALLOC_C)

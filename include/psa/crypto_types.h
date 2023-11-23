@@ -166,7 +166,7 @@ typedef uint32_t psa_algorithm_t;
  * integration-specific device management event occurs (for example,
  * a factory reset).
  *
- * Persistent keys have a key identifier of type #mbedtls_svc_key_id_t.
+ * Persistent keys have a key identifier of type #psa_key_id_t.
  * This identifier remains valid throughout the lifetime of the key,
  * even if the application instance that created the key terminates.
  * The application can call psa_open_key() to open a persistent key that
@@ -294,7 +294,7 @@ typedef uint32_t psa_key_id_t;
  *       format.
  */
 #if !defined(MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER)
-typedef psa_key_id_t mbedtls_svc_key_id_t;
+typedef psa_key_id_t psa_key_id_t;
 
 #else /* MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER */
 /* Implementation-specific: The Mbed Cryptography library can be built as
@@ -305,7 +305,7 @@ typedef psa_key_id_t mbedtls_svc_key_id_t;
 typedef struct {
     psa_key_id_t MBEDTLS_PRIVATE(key_id);
     mbedtls_key_owner_id_t MBEDTLS_PRIVATE(owner);
-} mbedtls_svc_key_id_t;
+} psa_key_id_t;
 
 #endif /* !MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER */
 

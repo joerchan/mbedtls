@@ -1502,7 +1502,7 @@ struct mbedtls_ssl_config {
 #if defined(MBEDTLS_SSL_HANDSHAKE_WITH_PSK_ENABLED)
 
 #if defined(MBEDTLS_USE_PSA_CRYPTO)
-    mbedtls_svc_key_id_t MBEDTLS_PRIVATE(psk_opaque); /*!< PSA key slot holding opaque PSK. This field
+    psa_key_id_t MBEDTLS_PRIVATE(psk_opaque); /*!< PSA key slot holding opaque PSK. This field
                                                        *   should only be set via
                                                        *   mbedtls_ssl_conf_psk_opaque().
                                                        *   If either no PSK or a raw PSK have been
@@ -3483,7 +3483,7 @@ int mbedtls_ssl_conf_psk(mbedtls_ssl_config *conf,
  * \return         Another negative error code on other kinds of failure.
  */
 int mbedtls_ssl_conf_psk_opaque(mbedtls_ssl_config *conf,
-                                mbedtls_svc_key_id_t psk,
+                                psa_key_id_t psk,
                                 const unsigned char *psk_identity,
                                 size_t psk_identity_len);
 #endif /* MBEDTLS_USE_PSA_CRYPTO */
@@ -3529,7 +3529,7 @@ int mbedtls_ssl_set_hs_psk(mbedtls_ssl_context *ssl,
  * \return         An \c MBEDTLS_ERR_SSL_XXX error code on failure.
  */
 int mbedtls_ssl_set_hs_psk_opaque(mbedtls_ssl_context *ssl,
-                                  mbedtls_svc_key_id_t psk);
+                                  psa_key_id_t psk);
 #endif /* MBEDTLS_USE_PSA_CRYPTO */
 
 #if defined(MBEDTLS_SSL_SRV_C)
@@ -3929,7 +3929,7 @@ int mbedtls_ssl_set_hs_ecjpake_password(mbedtls_ssl_context *ssl,
  * \return         0 on success, or a negative error code.
  */
 int mbedtls_ssl_set_hs_ecjpake_password_opaque(mbedtls_ssl_context *ssl,
-                                               mbedtls_svc_key_id_t pwd);
+                                               psa_key_id_t pwd);
 #endif /*MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED */
 
 #if defined(MBEDTLS_SSL_ALPN)

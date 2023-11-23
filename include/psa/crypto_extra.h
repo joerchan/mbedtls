@@ -808,7 +808,7 @@ static inline int psa_key_id_is_builtin(psa_key_id_t key_id)
  *           is not allowed to access it.
  */
 psa_status_t mbedtls_psa_platform_get_builtin_key(
-    mbedtls_svc_key_id_t key_id,
+    psa_key_id_t key_id,
     psa_key_lifetime_t *lifetime,
     psa_drv_slot_number_t *slot_number);
 #endif /* MBEDTLS_PSA_CRYPTO_BUILTIN_KEYS */
@@ -1541,7 +1541,7 @@ psa_status_t psa_pake_setup(psa_pake_operation_t *operation,
  *         results in this error code.
  */
 psa_status_t psa_pake_set_password_key(psa_pake_operation_t *operation,
-                                       mbedtls_svc_key_id_t password);
+                                       psa_key_id_t password);
 
 /** Set the user ID for a password-authenticated key exchange.
  *

@@ -332,7 +332,7 @@ typedef struct {
     psa_key_type_t MBEDTLS_PRIVATE(type);
     psa_key_bits_t MBEDTLS_PRIVATE(bits);
     psa_key_lifetime_t MBEDTLS_PRIVATE(lifetime);
-    mbedtls_svc_key_id_t MBEDTLS_PRIVATE(id);
+    psa_key_id_t MBEDTLS_PRIVATE(id);
     psa_key_policy_t MBEDTLS_PRIVATE(policy);
     psa_key_attributes_flag_t MBEDTLS_PRIVATE(flags);
 } psa_core_key_attributes_t;
@@ -364,7 +364,7 @@ static inline struct psa_key_attributes_s psa_key_attributes_init(void)
 }
 
 static inline void psa_set_key_id(psa_key_attributes_t *attributes,
-                                  mbedtls_svc_key_id_t key)
+                                  psa_key_id_t key)
 {
     psa_key_lifetime_t lifetime = attributes->MBEDTLS_PRIVATE(core).MBEDTLS_PRIVATE(lifetime);
 
@@ -378,7 +378,7 @@ static inline void psa_set_key_id(psa_key_attributes_t *attributes,
     }
 }
 
-static inline mbedtls_svc_key_id_t psa_get_key_id(
+static inline psa_key_id_t psa_get_key_id(
     const psa_key_attributes_t *attributes)
 {
     return attributes->MBEDTLS_PRIVATE(core).MBEDTLS_PRIVATE(id);

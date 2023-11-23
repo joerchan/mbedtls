@@ -92,7 +92,7 @@ static inline int psa_key_id_is_volatile(psa_key_id_t key_id)
  * \retval #PSA_ERROR_STORAGE_FAILURE \emptydescription
  * \retval #PSA_ERROR_DATA_CORRUPT \emptydescription
  */
-psa_status_t psa_get_and_lock_key_slot(mbedtls_svc_key_id_t key,
+psa_status_t psa_get_and_lock_key_slot(psa_key_id_t key,
                                        psa_key_slot_t **p_slot);
 
 /** Initialize the key slot structures.
@@ -220,6 +220,6 @@ psa_status_t psa_validate_key_persistence(psa_key_lifetime_t lifetime);
  *
  * \retval <> 0 if the key identifier is valid, 0 otherwise.
  */
-int psa_is_valid_key_id(mbedtls_svc_key_id_t key, int vendor_ok);
+int psa_is_valid_key_id(psa_key_id_t key, int vendor_ok);
 
 #endif /* PSA_CRYPTO_SLOT_MANAGEMENT_H */

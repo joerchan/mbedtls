@@ -697,7 +697,7 @@ static int ssl_tls13_calc_finished_core(psa_algorithm_t hash_alg,
                                         unsigned char *dst,
                                         size_t *dst_len)
 {
-    mbedtls_svc_key_id_t key = MBEDTLS_SVC_KEY_ID_INIT;
+    psa_key_id_t key = MBEDTLS_SVC_KEY_ID_INIT;
     psa_key_attributes_t attributes = PSA_KEY_ATTRIBUTES_INIT;
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     size_t hash_len = PSA_HASH_LENGTH(hash_alg);

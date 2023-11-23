@@ -765,7 +765,7 @@ struct mbedtls_ssl_handshake_params {
 #if defined(MBEDTLS_USE_PSA_CRYPTO) || defined(MBEDTLS_SSL_PROTO_TLS1_3)
     psa_key_type_t ecdh_psa_type;
     size_t ecdh_bits;
-    mbedtls_svc_key_id_t ecdh_psa_privkey;
+    psa_key_id_t ecdh_psa_privkey;
     uint8_t ecdh_psa_privkey_is_external;
     unsigned char ecdh_psa_peerkey[MBEDTLS_PSA_MAX_EC_PUBKEY_LENGTH];
     size_t ecdh_psa_peerkey_len;
@@ -775,7 +775,7 @@ struct mbedtls_ssl_handshake_params {
 #if defined(MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED)
 #if defined(MBEDTLS_USE_PSA_CRYPTO)
     psa_pake_operation_t psa_pake_ctx;        /*!< EC J-PAKE key exchange */
-    mbedtls_svc_key_id_t psa_pake_password;
+    psa_key_id_t psa_pake_password;
     uint8_t psa_pake_ctx_is_ok;
 #else
     mbedtls_ecjpake_context ecjpake_ctx;        /*!< EC J-PAKE key exchange */
@@ -793,7 +793,7 @@ struct mbedtls_ssl_handshake_params {
 
 #if defined(MBEDTLS_SSL_HANDSHAKE_WITH_PSK_ENABLED)
 #if defined(MBEDTLS_USE_PSA_CRYPTO)
-    mbedtls_svc_key_id_t psk_opaque;            /*!< Opaque PSK from the callback   */
+    psa_key_id_t psk_opaque;            /*!< Opaque PSK from the callback   */
     uint8_t psk_opaque_is_internal;
 #else
     unsigned char *psk;                 /*!<  PSK from the callback         */
@@ -1113,8 +1113,8 @@ struct mbedtls_ssl_transform {
 #if defined(MBEDTLS_SSL_SOME_SUITES_USE_MAC)
 
 #if defined(MBEDTLS_USE_PSA_CRYPTO)
-    mbedtls_svc_key_id_t psa_mac_enc;           /*!<  MAC (encryption)        */
-    mbedtls_svc_key_id_t psa_mac_dec;           /*!<  MAC (decryption)        */
+    psa_key_id_t psa_mac_enc;           /*!<  MAC (encryption)        */
+    psa_key_id_t psa_mac_dec;           /*!<  MAC (decryption)        */
     psa_algorithm_t psa_mac_alg;                /*!<  psa MAC algorithm       */
 #else
     mbedtls_md_context_t md_ctx_enc;            /*!<  MAC (encryption)        */
@@ -1130,8 +1130,8 @@ struct mbedtls_ssl_transform {
     mbedtls_ssl_protocol_version tls_version;
 
 #if defined(MBEDTLS_USE_PSA_CRYPTO)
-    mbedtls_svc_key_id_t psa_key_enc;           /*!<  psa encryption key      */
-    mbedtls_svc_key_id_t psa_key_dec;           /*!<  psa decryption key      */
+    psa_key_id_t psa_key_enc;           /*!<  psa encryption key      */
+    psa_key_id_t psa_key_dec;           /*!<  psa decryption key      */
     psa_algorithm_t psa_alg;                    /*!<  psa algorithm           */
 #else
     mbedtls_cipher_context_t cipher_ctx_enc;    /*!<  encryption context      */
@@ -1502,7 +1502,7 @@ int mbedtls_ssl_conf_has_static_psk(mbedtls_ssl_config const *conf);
  * 2. static PSK configured by \c mbedtls_ssl_conf_psk_opaque()
  * Return an opaque PSK
  */
-static inline mbedtls_svc_key_id_t mbedtls_ssl_get_opaque_psk(
+static inline psa_key_id_t mbedtls_ssl_get_opaque_psk(
     const mbedtls_ssl_context *ssl)
 {
     if (!mbedtls_svc_key_id_is_null(ssl->handshake->psk_opaque)) {

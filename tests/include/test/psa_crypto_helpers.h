@@ -64,7 +64,7 @@
 #if defined(MBEDTLS_PSA_CRYPTO_STORAGE_C)
 
 /* Internal function for #TEST_USES_KEY_ID. Return 1 on success, 0 on failure. */
-int mbedtls_test_uses_key_id(mbedtls_svc_key_id_t key_id);
+int mbedtls_test_uses_key_id(psa_key_id_t key_id);
 
 /** Destroy persistent keys recorded with #TEST_USES_KEY_ID.
  */

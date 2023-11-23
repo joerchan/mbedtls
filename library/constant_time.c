@@ -511,7 +511,7 @@ void mbedtls_ct_memcpy_offset(unsigned char *dest,
 #define MAX_HASH_BLOCK_LENGTH PSA_HASH_BLOCK_LENGTH(PSA_ALG_SHA_1)
 #endif
 
-int mbedtls_ct_hmac(mbedtls_svc_key_id_t key,
+int mbedtls_ct_hmac(psa_key_id_t key,
                     psa_algorithm_t mac_alg,
                     const unsigned char *add_data,
                     size_t add_data_len,

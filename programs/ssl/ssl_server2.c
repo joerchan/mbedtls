@@ -948,7 +948,7 @@ struct _psk_entry {
     size_t key_len;
     unsigned char key[MBEDTLS_PSK_MAX_LEN];
 #if defined(MBEDTLS_USE_PSA_CRYPTO)
-    mbedtls_svc_key_id_t slot;
+    psa_key_id_t slot;
 #endif /* MBEDTLS_USE_PSA_CRYPTO */
     psk_entry *next;
 };
@@ -963,7 +963,7 @@ int psk_free(psk_entry *head)
     while (head != NULL) {
 #if defined(MBEDTLS_USE_PSA_CRYPTO)
         psa_status_t status;
-        mbedtls_svc_key_id_t const slot = head->slot;
+        psa_key_id_t const slot = head->slot;
 
         if (MBEDTLS_SVC_KEY_ID_GET_KEY_ID(slot) != 0) {
             status = psa_destroy_key(slot);
@@ -1309,7 +1309,7 @@ static void ssl_async_cancel(mbedtls_ssl_context *ssl)
 
 #if defined(MBEDTLS_USE_PSA_CRYPTO)
 #if defined(MBEDTLS_SSL_HANDSHAKE_WITH_PSK_ENABLED)
-static psa_status_t psa_setup_psk_key_slot(mbedtls_svc_key_id_t *slot,
+static psa_status_t psa_setup_psk_key_slot(psa_key_id_t *slot,
                                            psa_algorithm_t alg,
                                            unsigned char *psk,
                                            size_t psk_len)
@@ -1473,7 +1473,7 @@ int main(int argc, char *argv[])
 #if defined(MBEDTLS_SSL_HANDSHAKE_WITH_PSK_ENABLED)
 #if defined(MBEDTLS_USE_PSA_CRYPTO)
     psa_algorithm_t alg = 0;
-    mbedtls_svc_key_id_t psk_slot = MBEDTLS_SVC_KEY_ID_INIT;
+    psa_key_id_t psk_slot = MBEDTLS_SVC_KEY_ID_INIT;
 #endif /* MBEDTLS_USE_PSA_CRYPTO */
     unsigned char psk[MBEDTLS_PSK_MAX_LEN];
     size_t psk_len = 0;
@@ -1503,8 +1503,8 @@ int main(int argc, char *argv[])
     mbedtls_pk_context pkey2;
     mbedtls_x509_crt_profile crt_profile_for_test = mbedtls_x509_crt_profile_default;
 #if defined(MBEDTLS_USE_PSA_CRYPTO)
-    mbedtls_svc_key_id_t key_slot = MBEDTLS_SVC_KEY_ID_INIT; /* invalid key slot */
-    mbedtls_svc_key_id_t key_slot2 = MBEDTLS_SVC_KEY_ID_INIT; /* invalid key slot */
+    psa_key_id_t key_slot = MBEDTLS_SVC_KEY_ID_INIT; /* invalid key slot */
+    psa_key_id_t key_slot2 = MBEDTLS_SVC_KEY_ID_INIT; /* invalid key slot */
 #endif
     int key_cert_init = 0, key_cert_init2 = 0;
 #endif /* MBEDTLS_SSL_HANDSHAKE_WITH_CERT_ENABLED */
@@ -1545,7 +1545,7 @@ int main(int argc, char *argv[])
 #endif
 #if defined(MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED) && \
     defined(MBEDTLS_USE_PSA_CRYPTO)
-    mbedtls_svc_key_id_t ecjpake_pw_slot = MBEDTLS_SVC_KEY_ID_INIT; /* ecjpake password key slot */
+    psa_key_id_t ecjpake_pw_slot = MBEDTLS_SVC_KEY_ID_INIT; /* ecjpake password key slot */
 #endif /* MBEDTLS_USE_PSA_CRYPTO && MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED */
 
 #if defined(MBEDTLS_SSL_HANDSHAKE_WITH_CERT_ENABLED)

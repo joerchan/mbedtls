@@ -1955,7 +1955,7 @@ static const uint8_t jpake_client_id[] = { 'c', 'l', 'i', 'e', 'n', 't' };
 
 static psa_status_t mbedtls_ssl_set_hs_ecjpake_password_common(
     mbedtls_ssl_context *ssl,
-    mbedtls_svc_key_id_t pwd)
+    psa_key_id_t pwd)
 {
     psa_status_t status;
     psa_pake_cipher_suite_t cipher_suite = psa_pake_cipher_suite_init();
@@ -2045,7 +2045,7 @@ int mbedtls_ssl_set_hs_ecjpake_password(mbedtls_ssl_context *ssl,
 }
 
 int mbedtls_ssl_set_hs_ecjpake_password_opaque(mbedtls_ssl_context *ssl,
-                                               mbedtls_svc_key_id_t pwd)
+                                               psa_key_id_t pwd)
 {
     psa_status_t status;
 
@@ -2237,7 +2237,7 @@ int mbedtls_ssl_set_hs_psk(mbedtls_ssl_context *ssl,
     psa_key_attributes_t key_attributes = psa_key_attributes_init();
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_algorithm_t alg = PSA_ALG_NONE;
-    mbedtls_svc_key_id_t key = MBEDTLS_SVC_KEY_ID_INIT;
+    psa_key_id_t key = MBEDTLS_SVC_KEY_ID_INIT;
 #endif /* MBEDTLS_USE_PSA_CRYPTO */
 
     if (psk == NULL || ssl->handshake == NULL) {
@@ -2295,7 +2295,7 @@ int mbedtls_ssl_set_hs_psk(mbedtls_ssl_context *ssl,
 
 #if defined(MBEDTLS_USE_PSA_CRYPTO)
 int mbedtls_ssl_conf_psk_opaque(mbedtls_ssl_config *conf,
-                                mbedtls_svc_key_id_t psk,
+                                psa_key_id_t psk,
                                 const unsigned char *psk_identity,
                                 size_t psk_identity_len)
 {
@@ -2323,7 +2323,7 @@ int mbedtls_ssl_conf_psk_opaque(mbedtls_ssl_config *conf,
 }
 
 int mbedtls_ssl_set_hs_psk_opaque(mbedtls_ssl_context *ssl,
-                                  mbedtls_svc_key_id_t psk)
+                                  psa_key_id_t psk)
 {
     if ((mbedtls_svc_key_id_is_null(psk)) ||
         (ssl->handshake == NULL)) {
@@ -6026,7 +6026,7 @@ int mbedtls_ssl_parse_sig_alg_ext(mbedtls_ssl_context *ssl,
 #if defined(MBEDTLS_USE_PSA_CRYPTO)
 
 static psa_status_t setup_psa_key_derivation(psa_key_derivation_operation_t *derivation,
-                                             mbedtls_svc_key_id_t key,
+                                             psa_key_id_t key,
                                              psa_algorithm_t alg,
                                              const unsigned char *raw_psk, size_t raw_psk_length,
                                              const unsigned char *seed, size_t seed_length,
@@ -6100,7 +6100,7 @@ static int tls_prf_generic(mbedtls_md_type_t md_type,
 {
     psa_status_t status;
     psa_algorithm_t alg;
-    mbedtls_svc_key_id_t master_key = MBEDTLS_SVC_KEY_ID_INIT;
+    psa_key_id_t master_key = MBEDTLS_SVC_KEY_ID_INIT;
     psa_key_derivation_operation_t derivation =
         PSA_KEY_DERIVATION_OPERATION_INIT;
 
@@ -6417,7 +6417,7 @@ static int ssl_compute_master(mbedtls_ssl_handshake_params *handshake,
         /* Perform PSK-to-MS expansion in a single step. */
         psa_status_t status;
         psa_algorithm_t alg;
-        mbedtls_svc_key_id_t psk;
+        psa_key_id_t psk;
         psa_key_derivation_operation_t derivation =
             PSA_KEY_DERIVATION_OPERATION_INIT;
         mbedtls_md_type_t hash_alg = handshake->ciphersuite_info->mac;
